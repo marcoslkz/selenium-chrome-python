@@ -1,0 +1,22 @@
+# To execute this docker-compose yml file use `docker-compose up`
+
+version: "3"
+
+services:
+  chrome:
+    container_name: chrome
+    image: selenium/standalone-chrome
+    shm_size: 2gb
+    ports:
+      - 4444:4444
+      - 7900:7900 #Web VNC
+
+  app:
+    # image: python:alpine
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      - SELENIUM_HOST=chrome
+    volumes:
+      - .:/usr/src/app
